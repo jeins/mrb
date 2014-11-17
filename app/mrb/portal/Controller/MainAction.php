@@ -23,6 +23,7 @@ class MainAction
         $dashboard = new DashboardAction($this->model);
         $dashboard->simpanAmalan();
         $statusAmalan = $dashboard->getAmalanToday();
+        $statusChart = $dashboard->calcChart();
 
         $this->portal->render(
             'Home/home.twig',

@@ -45,4 +45,21 @@ Class DashboardAction
 
         return $jsonData[$this->today];
     }
+
+    public function calcChart(){
+        $requirement = [
+            'select' => 'amalan, min_minggu',
+            'table' => 'amalan'
+        ];
+
+        $results = $this->db->selectQuery($requirement);
+        $minAmalan = [];
+        foreach($results as $result){
+            $minAmalan[$result['amalan']] = $result['min_minggu'];
+        }
+
+        $jsonData = $this->json->getDataFromJSON();
+
+        echo date('w', $this->today); die();
+    }
 }

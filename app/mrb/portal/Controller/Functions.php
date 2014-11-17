@@ -28,4 +28,9 @@ class Functions{
         }
         return $week_num;
     }
+
+    public function filterWeekDays($jsonTimestamp, $today){
+        $today_week_num = date('w', $today);
+        
+    }
 }
