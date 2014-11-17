@@ -1,0 +1,24 @@
+{
+	"autoload" : {
+        "psr-0": {
+            "mrb\\portal\\": "app/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*"
+    },
+    "require": {
+        "php": ">=5.4.0",
+        "slim/slim": "2.*",
+        "slim/views": "0.1.*",
+        "twig/twig": "1.*",
+        "symfony/yaml": "2.4.*@dev",
+        "symfony/twig-bridge": "~2.3"
+    },
+	"authors": [
+    {
+		"name": "Muhammad Juan Akbar",
+		"email": "mail@mjuanakbar.info"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MRB - IWKZ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    {% include 'css.twig' %}
+</head>
+<body class="skin-blue">
+    <header class="header">
+        <a href="index.html" class="logo">
+            BungGalau
+        </a>
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top" role="navigation">
+            {% include 'navigation.twig' %}
+        </nav>
+    </header>
+    <div class="wrapper row-offcanvas row-offcanvas-left">
+        <aside class="left-side sidebar-offcanvas">
+            <section class="sidebar">
+                {% include 'sidebar.twig' %}
+            </section>
+        </aside>
+        <aside class="right-side">
+            {% block content %}{% endblock %}
+        </aside>
+    </div>
+    <!-- /main -->
+    {% include 'js.twig' %}
+</body>
+</html>

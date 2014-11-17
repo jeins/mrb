@@ -1,0 +1,8 @@
+mysqli:
+    db_host: localhost
+    db_name: bugalow
+    db_user: root
+    db_pass: ''
+twig:
+    globals:
+        home_url: http://root.127.0.0.1.xip.io/
