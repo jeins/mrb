@@ -39,5 +39,9 @@ class Portal extends Slim
         $this->get('/', function() use ($app, $main){
             $main->pageRendering();
         });
+
+        $this->get('/statistik', function() use($main){
+            $main->statistikAmalan();
+        });
     }
 }

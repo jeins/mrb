@@ -26,4 +26,13 @@ class MainAction
             ]
         );
     }
+
+    public function statistikAmalan()
+    {
+        $this->portal->render(
+            'Home/statistik.twig',
+            [
+
+            ]);
+    }
 }
