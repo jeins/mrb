@@ -8,6 +8,7 @@
 
 namespace mrb\portal;
 
+use mrb\portal\Model\MRBModel;
 use Slim\Slim;
 use Slim\Views\Twig as Twig;
 use Slim\Views\TwigExtension as TwigExtension;
@@ -20,6 +21,8 @@ class Portal extends Slim
     {
         $this->twigView = new Twig();
         $this->twigView->parserExtensions = array(new TwigExtension());
+
+        date_default_timezone_set('Europe/Berlin');
 
         parent::__construct(
             [
@@ -35,9 +38,10 @@ class Portal extends Slim
     private function setupRouting()
     {
         $app = Portal::getInstance();
-        $main = new MainAction($this);
+        $main = new MainAction($this, new MRBModel($app->request()));
+
         $this->get('/', function() use ($app, $main){
-            $main->pageRendering();
+            $main->homeRendering();
         });
 
         $this->get('/statistik', function() use($main){

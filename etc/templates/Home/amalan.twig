@@ -1,46 +1,62 @@
+
 <div class="box box-primary">
     <div class="box-header">
         <i class="ion ion-clipboard"></i>
         <h3 class="box-title">Amalan Yaumiah</h3>
     </div>
     <div class="box-body">
-        <form action="#" method="get">
+        <form action="/" method="post">
             <ul class="todo-list">
-                <li>
+                <li {% if status.tilawah %}class="done"{% endif %}>
                     <!-- checkbox -->
-                    <input type="checkbox" value="ok" name="tilawah"/>
+                    <input type="checkbox" value="checked" {{ status.tilawah }} name="tilawah"/>
                     <!-- todo text -->
                     <span class="text">Tilawah</span>
                     <!-- Emphasis label -->
                     <small class="label label-success"><i class="fa fa-book"></i> min 3 lembar</small>
-                    <small class="label label-danger"><i class="fa  fa-bars"></i> 0 halaman</small>
+                    <small class="label label-default amalan-tilawah"><i class="fa fa-bars"></i> {{ status.banyak_tilawah }} halaman</small>
                     <!-- General tools such as edit or delete-->
-                    <div class="tools">
+                    <small class="form-edittilawah"><input class="input-sm" type="text" name="banyak_tilawah" value="{{ status.banyak_tilawah }}" placeholder="Total Halaman"></small>
+                    <div class="tools editamalan-tilawah">
                         <i class="fa fa-edit"></i>
                     </div>
                 </li>
-                <li>
-                    <input type="checkbox" value="ok" name="almathurat"/>
+                <li {% if status.hafalan %}class="done"{% endif %}>
+                    <!-- checkbox -->
+                    <input type="checkbox" value="checked" {{ status.hafalan }} name="hafalan"/>
+                    <!-- todo text -->
+                    <span class="text">Hafalan</span>
+                    <!-- Emphasis label -->
+                    <small class="label label-default amalan-hafalan"><i class="fa  fa-bars"></i> Surat: {{ status.surat_hafalan }}  |  Ayat: {{ status.ayat_hafalan }} </small>
+                    <!-- General tools such as edit or delete-->
+                    <small class="form-edithafalan"><input class="input-sm" type="text" name="surat_hafalan" value="{{ status.surat_hafalan }}" placeholder="QS Surat"></small>
+                    <small class="form-edithafalan"><input class="input-sm" type="text" name="ayat_hafalan" value="{{ status.ayat_hafalan }}" placeholder="Ayat"></small>
+                    <div class="tools editamalan-hafalan">
+                        <i class="fa fa-edit"></i>
+                    </div>
+                </li>
+                <li {% if status.almathurat %}class="done"{% endif %}>
+                    <input type="checkbox" value="checked" {{ status.almathurat }} name="almathurat"/>
                     <span class="text">Al Mathurat</span>
                     <small class="label label-success"><i class="fa fa-book"></i> min 1 kali</small>
                 </li>
-                <li>
-                    <input type="checkbox" value="ok" name="dhuha"/>
+                <li {% if status.dhuha %}class="done"{% endif %}>
+                    <input type="checkbox" value="checked" {{ status.dhuha }} name="dhuha"/>
                     <span class="text">Sholat Dhuha</span>
                     <small class="label label-success"><i class="fa fa-bookmark"></i> min 1 kali</small>
                 </li>
-                <li>
-                    <input type="checkbox" value="ok" name="sedekah"/>
+                <li {% if status.sedekah %}class="done"{% endif %}>
+                    <input type="checkbox" value="checked" {{ status.sedekah }} name="sedekah"/>
                     <span class="text">Sedekah</span>
                     <small class="label label-success"><i class="fa fa-bookmark"></i> min 1 kali</small>
                 </li>
-                <li>
-                    <input type="checkbox" value="ok" name="tahajud"/>
+                <li {% if status.tahajud %}class="done"{% endif %}>
+                    <input type="checkbox" value="checked" {{ status.tahajud }} name="tahajud"/>
                     <span class="text">Tahajud</span>
                     <small class="label label-success"><i class="fa fa-bookmark"></i> min 1 kali</small>
                 </li>
-                <li>
-                    <input type="checkbox" value="ok" name="puasa"/>
+                <li {% if status.puasa %}class="done"{% endif %}>
+                    <input type="checkbox" value="checked" {{ status.puasa }} name="puasa"/>
                     <span class="text">Puasa Sunnah</span>
                     <small class="label label-success"><i class="fa fa-clock-o"></i> 1 hari</small>
                 </li>
