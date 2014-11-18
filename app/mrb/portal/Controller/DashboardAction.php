@@ -60,6 +60,5 @@ Class DashboardAction
 
         $jsonData = $this->json->getDataFromJSON();
 
-        echo date('w', $this->today); die();
     }
 }
