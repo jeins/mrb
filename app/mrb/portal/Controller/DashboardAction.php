@@ -25,7 +25,7 @@ Class DashboardAction
     public function simpanAmalan(){
         $fileName = 'juan.json';
         $this->json->setFileName($fileName);
-        $jsonData = $this->json->getDataFromJSON();
+        $jsonData = $this->json->getAllDataFromJSON();
 
         if(array_key_exists($this->today, $jsonData)){
             foreach ($this->queries as $key=>$value){
@@ -41,7 +41,7 @@ Class DashboardAction
     public function getAmalanToday() {
         $fileName = 'juan.json';
         $this->json->setFileName($fileName);
-        $jsonData = $this->json->getDataFromJSON();
+        $jsonData = $this->json->getAllDataFromJSON();
 
         return $jsonData[$this->today];
     }
@@ -58,8 +58,7 @@ Class DashboardAction
             $minAmalan[$result['amalan']] = $result['min_minggu'];
         }
 
-        $jsonData = $this->json->getDataFromJSON();
+        $jsonData = $this->json->getSpesificDataFromJSON(date('w', $this->today));
 
-        echo date('w', $this->today); die();
     }
 }

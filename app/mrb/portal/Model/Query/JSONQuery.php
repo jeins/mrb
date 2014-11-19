@@ -21,8 +21,19 @@ class JSONQuery
         $this->JSONFile = $this->pathJSON.$fileName;
     }
 
-    public function getDataFromJSON(){
+    public function getAllDataFromJSON(){
         return json_decode(file_get_contents($this->JSONFile), true);
+    }
+
+    public function getSpesificDataFromJSON($week){
+        $arrJSONData = array_reverse($this->getAllDataFromJSON(), true);
+        $newJSONData = [];
+       foreach($arrJSONData as $key=>$value){
+           for($i=0; $i<$week; $i++){
+               $newJSONData[$key] = $value;
+           }
+       }
+        return $newJSONData;
     }
 
     public function writeDataToJSON($data){
