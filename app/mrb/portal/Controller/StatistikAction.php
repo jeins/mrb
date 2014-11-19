@@ -25,7 +25,7 @@ class StatistikAction
 
     public function generateJSON(){
         $jsonData = $this->json->getAllDataFromJSON();
-        $tmpData = array();
+        $tmpData = [];
 
         $index = 0;
         foreach ($jsonData as $key=>$value) {
@@ -33,15 +33,16 @@ class StatistikAction
             $d = date('j', $key);
             $m = date('n', $key)-1;
             if(array_key_exists($this->amalan, $value)){
-                $tmpData[$index] = array("Date.UTC($y, $m, $d), " .$value[$this->amalan]);
+                $tmpData[$index] = [$y, $m, $d, $value[$this->amalan]];
+                $index++;
             }
-            $index++;
         }
 
         $response = $this->app->response();
         $response['Content-type'] = 'application/json';
 
         $json = json_encode($tmpData);
-        $response->body('?('.str_replace('"', '',$json).");");
+
+        $response->body($json);
     }
 }

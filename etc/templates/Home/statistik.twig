@@ -12,7 +12,7 @@
     $(function () {
         var seriesOptions = [],
                 seriesCounter = 0,
-                names = ['dhuha', 'puasa'],
+                names = ['dhuha', 'puasa', 'sedekah', 'tahajud', 'banyak_tilawah', 'almathurat'],
         // create the chart when all data is loaded
                 createChart = function () {
 
@@ -57,14 +57,18 @@
                 };
 
         $.each(names, function (i, name) {
+//            $.getJSON('http://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json&callback=?',    function (data) {
+            $.getJSON('http://mrb.127.0.0.1.xip.io/getjson?amalan='+ name +'&filename=juan', function (data) {
+                var convertData = [];
+                $.each(data, function(i, item) {
+                    convertData[i] = [Date.UTC(item[0], item[1], item[2]), parseFloat(item[3])];
+                });
 
-//            $.getJSON('http://www.highcharts.com/samples/data/jsonp.php?filename=' + name.toLowerCase() + '-c.json&callback=?',    function (data) {
-            $.getJSON('/getjson?amalan='+name+'&filename=juan',    function (data) {
                 seriesOptions[i] = {
                     name: name,
-                    data: data
+                    data: convertData
                 };
-console.log("OK");
+                console.log(name + data);
                 // As we're loading the data asynchronously, we don't know what order it will arrive. So
                 // we keep a counter and create the chart when all the data is loaded.
                 seriesCounter += 1;
@@ -72,6 +76,11 @@ console.log("OK");
                 if (seriesCounter === names.length) {
                     createChart();
                 }
+            }).fail(function(jqxhr, textStatus, error) {
+                var err = textStatus + ", " + error;
+                console.log( "error occured: " + err );
+            }).done(function() {
+                console.log( "second success" );
             });
         });
     });
