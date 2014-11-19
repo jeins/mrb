@@ -10,7 +10,7 @@ namespace mrb\portal\Controller;
 
 use mrb\portal\Model\MRBModel;
 use mrb\portal\Portal;
-use mrb\portal\Controller\DashboardAction;
+use mrb\portal\Controller\Home\DashboardAction;
 
 class MainAction
 {

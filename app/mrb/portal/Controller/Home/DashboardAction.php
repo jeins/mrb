@@ -6,7 +6,7 @@
  * Time: 15:21
  */
 
-namespace mrb\portal\Controller;
+namespace mrb\portal\Controller\Home;
 
 use mrb\portal\Model\MRBModel;
 use mrb\portal\Model\Query\JSONQuery;
@@ -17,7 +17,6 @@ Class DashboardAction
     public function __construct(MRBModel $model) {
         $this->db = new MainQuery();
         $this->json = new JSONQuery();
-        $this->functions = new Functions();
         $this->queries = $model->getQueries();
         $this->today = strtotime(date('d-m-Y'));
     }

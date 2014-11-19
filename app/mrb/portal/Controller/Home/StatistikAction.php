@@ -6,7 +6,7 @@
  * Time: 18:14
  */
 
-namespace mrb\portal\Controller;
+namespace mrb\portal\Controller\Home;
 
 use mrb\portal\Model\Query\JSONQuery;
 use mrb\portal\Portal;

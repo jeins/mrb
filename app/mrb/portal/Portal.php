@@ -8,8 +8,10 @@
 
 namespace mrb\portal;
 
-use mrb\portal\Controller\StatistikAction;
+use mrb\portal\Controller\Admin\NewUserAction;
+use mrb\portal\Controller\Home\StatistikAction;
 use mrb\portal\Model\MRBModel;
+use mrb\portal\Model\Query\QueryUser;
 use Slim\Slim;
 use Slim\Views\Twig as Twig;
 use Slim\Views\TwigExtension as TwigExtension;
@@ -55,6 +57,13 @@ class Portal extends Slim
 
         $this->get('/statistik', function() use($main){
             $main->statistikAmalan();
+        });
+
+        //ADMIN
+        //Create New User
+        $this->get('/tambahjamaah', function(){
+            $user = new NewUserAction($this);
+            $user->action();
         });
     }
 }
