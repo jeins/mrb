@@ -10,6 +10,7 @@ namespace mrb\portal;
 
 use mrb\portal\Controller\Admin\NewUserAction;
 use mrb\portal\Controller\Home\StatistikAction;
+use mrb\portal\Controller\LoginAction;
 use mrb\portal\Model\MRBModel;
 use mrb\portal\Model\Query\QueryUser;
 use Slim\Slim;
@@ -43,8 +44,17 @@ class Portal extends Slim
         $app = Portal::getInstance();
         $main = new MainAction($this, new MRBModel($app->request()));
 
+        $this->post('/login', function(){
+            $login = new LoginAction($this);
+            $login->forwardUrl();
+        });
+
+        $this->get('/login', function() use($main){
+           $main->pageRendering();
+        });
+
         $this->get('/home/:group', function($group) use ($app, $main){
-            $main->homeRendering();echo "$group";
+            $main->homeRendering();
         });
         $this->post('/home/:group', function($group) use ($app, $main){
             $main->homeRendering();

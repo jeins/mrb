@@ -11,6 +11,7 @@ namespace mrb\portal\Controller;
 use mrb\portal\Model\MRBModel;
 use mrb\portal\Portal;
 use mrb\portal\Controller\Home\DashboardAction;
+use mrb\portal\Controller\LoginAction;
 
 class MainAction
 {
@@ -35,7 +36,11 @@ class MainAction
     }
 
     public function pageRendering(){
-
+        $this->portal->render(
+            'Login/login.twig',
+            [
+            ]
+        );
     }
 
     public function statistikAmalan()

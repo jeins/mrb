@@ -31,7 +31,16 @@ class QueryUser extends MainQuery
     }
 
     public function isValid($name, $keylog){
-        return true;
+        $attribute = [
+            'table' => 'mrb_userlogin',
+            'select' => 'COUNT(*) AS total',
+            'terms' => "username='$name' AND CONVERT('AES_DECRYPT($keylog,".$this->config['security']['key'].")' USING utf8) LIKE '%$keylog%'"
+        ];
+        $result = $this->selectQuery($attribute);
+        if($result[0]['total'] == 1){
+            return true;
+        }
+        return false;
     }
 
     public function getKeyDoc($name, $keylog){
@@ -43,5 +52,16 @@ class QueryUser extends MainQuery
         $result = $this->selectQuery($attribute);
 
         return $result[0]['keydoc'];
+    }
+
+    public function getGroupLiqo($name, $keylog){
+        $attribute = [
+            'table' => 'mrb_userlogin, mrb_groupliqo',
+            'select' => 'id_groupliqo, mrb_groupliqo.groupliqo',
+            'terms' => "username='$name' AND CONVERT('AES_DECRYPT($keylog,".$this->config['security']['key'].")' USING utf8) LIKE '%$keylog%' AND id_groupliqo=mrb_userlogin.groupliqo"
+        ];
+        $result = $this->selectQuery($attribute);
+
+        return $result[0];
     }
 }

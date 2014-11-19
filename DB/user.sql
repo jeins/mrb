@@ -25,6 +25,6 @@ CREATE TABLE IF NOT EXISTS `mrb_userlogin` (
   `username` varchar(100) NOT NULL,
   `keylog` varbinary(255) NOT NULL,
   `keydoc` varchar(32) NOT NULL,
-  `groupliqo` varchar(2) NOT NULL,
+  `groupliqo` INT NOT NULL,
   PRIMARY KEY (`user_id`)
 );

@@ -37,7 +37,7 @@ class MainQuery
         }
 
         $resultSet = $this->mysqli->query($query);
-        $results_array = [];
+        $results_array = [];echo $query;
         while ($row = $resultSet->fetch_assoc()) {
             $results_array[] = $row;
         }
