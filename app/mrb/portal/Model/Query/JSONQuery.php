@@ -28,11 +28,16 @@ class JSONQuery
     public function getSpesificDataFromJSON($week){
         $arrJSONData = array_reverse($this->getAllDataFromJSON(), true);
         $newJSONData = [];
-       foreach($arrJSONData as $key=>$value){
-           for($i=0; $i<$week; $i++){
-               $newJSONData[$key] = $value;
-           }
-       }
+
+        $i = 0;
+        foreach($arrJSONData as $key=>$value){
+            if($i<=$week){
+                $newJSONData[$key] = $value;
+                $i++;
+            } else{
+                break;
+            }
+        }
         return $newJSONData;
     }
 

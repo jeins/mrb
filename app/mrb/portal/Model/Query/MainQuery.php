@@ -37,7 +37,11 @@ class MainQuery
         }
 
         $resultSet = $this->mysqli->query($query);
-        return $resultSet->fetch_all(MYSQLI_ASSOC);
+        $results_array = [];
+        while ($row = $resultSet->fetch_assoc()) {
+            $results_array[] = $row;
+        }
+        return $results_array;
     }
 
     public function insertQuery($requirement)

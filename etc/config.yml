@@ -5,4 +5,4 @@ mysqli:
     db_pass: root
 twig:
     globals:
-        home_url: http://root.127.0.0.1.xip.io/
+        home_url: http://localhost

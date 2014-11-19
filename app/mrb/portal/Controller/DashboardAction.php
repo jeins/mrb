@@ -60,5 +60,20 @@ Class DashboardAction
 
         $jsonData = $this->json->getSpesificDataFromJSON(date('w', $this->today));
 
+        $totalAmalan = [];
+        foreach($minAmalan as $key=>$value){
+            $totalAmalan[$key] = 0;
+            foreach($jsonData as $amalan){
+                if(array_key_exists($key, $amalan)){
+                    $totalAmalan[$key] += $amalan[$key];
+                }
+            }
+            $totalAmalan[$key] = round(($totalAmalan[$key] / $value)*100, 2);
+            if($totalAmalan[$key] > 100){
+                $totalAmalan[$key] = 100;
+            }
+        }
+
+        return $totalAmalan;
     }
 }

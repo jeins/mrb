@@ -9,7 +9,7 @@
             <ul class="todo-list">
                 <li {% if status.tilawah %}class="done"{% endif %}>
                     <!-- checkbox -->
-                    <input type="checkbox" value="checked" {{ status.tilawah }} name="tilawah"/>
+                    <input type="checkbox" value="1" {% if status.tilawah %}checked{% endif %} name="tilawah"/>
                     <!-- todo text -->
                     <span class="text">Tilawah</span>
                     <!-- Emphasis label -->
@@ -23,7 +23,7 @@
                 </li>
                 <li {% if status.hafalan %}class="done"{% endif %}>
                     <!-- checkbox -->
-                    <input type="checkbox" value="checked" {{ status.hafalan }} name="hafalan"/>
+                    <input type="checkbox" value="1" {% if status.hafalan %}checked{% endif %} name="hafalan"/>
                     <!-- todo text -->
                     <span class="text">Hafalan</span>
                     <!-- Emphasis label -->
@@ -36,27 +36,27 @@
                     </div>
                 </li>
                 <li {% if status.almathurat %}class="done"{% endif %}>
-                    <input type="checkbox" value="checked" {{ status.almathurat }} name="almathurat"/>
+                    <input type="checkbox" value="1" {% if status.almathurat %}checked{% endif %} name="almathurat"/>
                     <span class="text">Al Mathurat</span>
                     <small class="label label-success"><i class="fa fa-book"></i> min 1 kali</small>
                 </li>
                 <li {% if status.dhuha %}class="done"{% endif %}>
-                    <input type="checkbox" value="checked" {{ status.dhuha }} name="dhuha"/>
+                    <input type="checkbox" value="1" {% if status.dhuha %}checked{% endif %} name="dhuha"/>
                     <span class="text">Sholat Dhuha</span>
                     <small class="label label-success"><i class="fa fa-bookmark"></i> min 1 kali</small>
                 </li>
                 <li {% if status.sedekah %}class="done"{% endif %}>
-                    <input type="checkbox" value="checked" {{ status.sedekah }} name="sedekah"/>
+                    <input type="checkbox" value="1" {% if status.sedekah %}checked{% endif %} name="sedekah"/>
                     <span class="text">Sedekah</span>
                     <small class="label label-success"><i class="fa fa-bookmark"></i> min 1 kali</small>
                 </li>
                 <li {% if status.tahajud %}class="done"{% endif %}>
-                    <input type="checkbox" value="checked" {{ status.tahajud }} name="tahajud"/>
+                    <input type="checkbox" value="1" {% if status.tahajud %}checked{% endif %} name="tahajud"/>
                     <span class="text">Tahajud</span>
                     <small class="label label-success"><i class="fa fa-bookmark"></i> min 1 kali</small>
                 </li>
                 <li {% if status.puasa %}class="done"{% endif %}>
-                    <input type="checkbox" value="checked" {{ status.puasa }} name="puasa"/>
+                    <input type="checkbox" value="1" {% if status.puasa %}checked{% endif %} name="puasa"/>
                     <span class="text">Puasa Sunnah</span>
                     <small class="label label-success"><i class="fa fa-clock-o"></i> 1 hari</small>
                 </li>

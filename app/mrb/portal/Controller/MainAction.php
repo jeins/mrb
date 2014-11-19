@@ -28,7 +28,8 @@ class MainAction
         $this->portal->render(
             'Home/home.twig',
             [
-                'status' => $statusAmalan
+                'status' => $statusAmalan,
+                'chart' => $statusChart
             ]
         );
     }
