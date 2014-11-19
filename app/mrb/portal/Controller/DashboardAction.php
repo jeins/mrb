@@ -23,7 +23,7 @@ Class DashboardAction
     }
 
     public function simpanAmalan(){
-        $fileName = 'juan.json';
+        $fileName = 'juan';
         $this->json->setFileName($fileName);
         $jsonData = $this->json->getAllDataFromJSON();
 
@@ -39,7 +39,7 @@ Class DashboardAction
     }
 
     public function getAmalanToday() {
-        $fileName = 'juan.json';
+        $fileName = 'juan';
         $this->json->setFileName($fileName);
         $jsonData = $this->json->getAllDataFromJSON();
 

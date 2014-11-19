@@ -8,6 +8,7 @@
 
 namespace mrb\portal;
 
+use mrb\portal\Controller\StatistikAction;
 use mrb\portal\Model\MRBModel;
 use Slim\Slim;
 use Slim\Views\Twig as Twig;
@@ -45,6 +46,11 @@ class Portal extends Slim
         });
         $this->post('/', function() use ($app, $main){
             $main->homeRendering();
+        });
+
+        $this->get('/getjson', function() {
+           $getJSON = new StatistikAction($this);
+            $getJSON->generateJSON();
         });
 
         $this->get('/statistik', function() use($main){

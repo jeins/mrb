@@ -18,7 +18,7 @@ class JSONQuery
     }
 
     public function setFileName($fileName){
-        $this->JSONFile = $this->pathJSON.$fileName;
+        $this->JSONFile = $this->pathJSON.$fileName.'.json';
     }
 
     public function getAllDataFromJSON(){
