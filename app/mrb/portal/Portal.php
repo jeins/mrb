@@ -43,10 +43,10 @@ class Portal extends Slim
         $app = Portal::getInstance();
         $main = new MainAction($this, new MRBModel($app->request()));
 
-        $this->get('/', function() use ($app, $main){
-            $main->homeRendering();
+        $this->get('/home/:group', function($group) use ($app, $main){
+            $main->homeRendering();echo "$group";
         });
-        $this->post('/', function() use ($app, $main){
+        $this->post('/home/:group', function($group) use ($app, $main){
             $main->homeRendering();
         });
 
