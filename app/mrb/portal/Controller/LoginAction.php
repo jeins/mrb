@@ -24,7 +24,7 @@ class LoginAction
 
     public function forwardUrl(){
 
-        if($this->queryUser->isValid($this->username, $this->keylog)){echo "OK";die();
+        if($this->queryUser->isValid($this->username, $this->keylog)){
             $groupDetail = $this->queryUser->getGroupLiqo($this->username, $this->keylog);
             $groupName = $groupDetail['groupliqo'];
             $groupId = $groupDetail['id_groupliqo'];
