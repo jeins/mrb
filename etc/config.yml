@@ -2,7 +2,7 @@ mysqli:
     db_host: localhost
     db_name: mrb
     db_user: root
-    db_pass: 
+    db_pass: root
 twig:
     globals:
         home_url: http://mrb123.127.0.0.1.xip.io/

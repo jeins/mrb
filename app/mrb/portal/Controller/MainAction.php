@@ -8,6 +8,8 @@
 
 namespace mrb\portal\Controller;
 
+use mrb\portal\Controller\Home\StatistikAction;
+use mrb\portal\Model\MRBConfig;
 use mrb\portal\Model\MRBModel;
 use mrb\portal\Portal;
 use mrb\portal\Controller\Home\DashboardAction;
@@ -20,35 +22,45 @@ class MainAction
         $this->model = $model;
     }
 
-    public function homeRendering(){
-        $dashboard = new DashboardAction($this->model);
-        $dashboard->simpanAmalan();
-        $statusAmalan = $dashboard->getAmalanToday();
-        $statusChart = $dashboard->calcChart();
+    public function pageRendering($page){
+        $template = "";
+        $params = [];
+        switch($page){
+            case MRBConfig::PAGE_HOME:
+                $dashboard = new DashboardAction($this->model);
+                $template = "Home/home.twig";
+                $params = [
+                    'status' => $dashboard->getAmalanToday(),
+                    'chart' => $dashboard->calcChart()
+                ];
+                break;
 
-        $this->portal->render(
-            'Home/home.twig',
-            [
-                'status' => $statusAmalan,
-                'chart' => $statusChart
-            ]
-        );
+            case MRBConfig::PAGE_STATISTIK:
+                $template = "Home/statistik";
+                break;
+
+            case MRBConfig::PAGE_GETJSON:
+                $getJson = new StatistikAction($this->portal);
+                $getJson->generateJSON();
+                break;
+
+            case MRBConfig::PAGE_LOGIN:
+                $template = "Login/login.twig";
+                break;
+        }
+        $this->portal->render($template, $params);
     }
 
-    public function pageRendering(){
-        $this->portal->render(
-            'Login/login.twig',
-            [
-            ]
-        );
-    }
-
-    public function statistikAmalan()
-    {
-        $this->portal->render(
-            'Home/statistik.twig',
-            [
-
-            ]);
+    public function pageAction($page){
+        switch($page){
+            case MRBConfig::PAGE_HOME:
+                $dashboard = new DashboardAction($this->model);
+                $dashboard->simpanAmalan();
+                break;
+            case MRBConfig::PAGE_LOGIN:
+                $login = new LoginAction($this->portal);
+                $login->forwardUrl();
+                break;
+        }
     }
 }

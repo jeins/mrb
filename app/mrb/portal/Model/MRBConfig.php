@@ -11,5 +11,8 @@ namespace mrb\portal\Model;
 class MRBConfig
 {
     const PAGE_HOME         = 'home';
-
+    const PAGE_LOGIN        = 'login';
+    const PAGE_STATISTIK    = 'statistik';
+    const PAGE_GETJSON      = 'getjson';
+    const PAGE_NEWUSER      = 'tambahjamaah';
 }

@@ -44,29 +44,11 @@ class Portal extends Slim
         $app = Portal::getInstance();
         $main = new MainAction($this, new MRBModel($app->request()));
 
-        $this->post('/login', function(){
-            $login = new LoginAction($this);
-            $login->forwardUrl();
+        $this->get('/:page', function($page) use($app, $main){
+            $main->pageRendering($page);
         });
-
-        $this->get('/login', function() use($main){
-           $main->pageRendering();
-        });
-
-        $this->get('/home/:group', function($group) use ($app, $main){
-            $main->homeRendering();
-        });
-        $this->post('/home/:group', function($group) use ($app, $main){
-            $main->homeRendering();
-        });
-
-        $this->get('/getjson', function() {
-           $getJSON = new StatistikAction($this);
-            $getJSON->generateJSON();
-        });
-
-        $this->get('/statistik', function() use($main){
-            $main->statistikAmalan();
+        $this->post('/:page', function($page) use ($app, $main){
+            $main->pageAction($page);
         });
 
         //ADMIN
