@@ -58,29 +58,29 @@
 
         $.each(names, function (i, name) {
 //            $.getJSON('http://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json&callback=?',    function (data) {
-            $.getJSON('http://mrb.127.0.0.1.xip.io/getjson?amalan='+ name +'&filename=juan', function (data) {
-                var convertData = [];
-                $.each(data, function(i, item) {
-                    convertData[i] = [Date.UTC(item[0], item[1], item[2]), parseFloat(item[3])];
-                });
+            $.ajax({
+                type: "POST",
+                url: 'http://mrb.127.0.0.1.xip.io/getjson',
+                data: {'amalan': name, 'filename': 'juan'},
+                success: function(data){
+                    var convertData = [];
+                    $.each(data, function(i, item) {
+                        convertData[i] = [Date.UTC(item[0], item[1], item[2]), parseFloat(item[3])];
+                    });
 
-                seriesOptions[i] = {
-                    name: name,
-                    data: convertData
-                };
-                console.log(name + data);
-                // As we're loading the data asynchronously, we don't know what order it will arrive. So
-                // we keep a counter and create the chart when all the data is loaded.
-                seriesCounter += 1;
+                    seriesOptions[i] = {
+                        name: name,
+                        data: convertData
+                    };
+                    console.log(name + data);
+                    // As we're loading the data asynchronously, we don't know what order it will arrive. So
+                    // we keep a counter and create the chart when all the data is loaded.
+                    seriesCounter += 1;
 
-                if (seriesCounter === names.length) {
-                    createChart();
+                    if (seriesCounter === names.length) {
+                        createChart();
+                    }
                 }
-            }).fail(function(jqxhr, textStatus, error) {
-                var err = textStatus + ", " + error;
-                console.log( "error occured: " + err );
-            }).done(function() {
-                console.log( "second success" );
             });
         });
     });

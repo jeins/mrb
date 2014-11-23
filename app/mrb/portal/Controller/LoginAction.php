@@ -28,7 +28,7 @@ class LoginAction
             $groupName = $groupDetail['groupliqo'];
             $groupId = $groupDetail['id_groupliqo'];
 
-            $this->app->redirect('/home/');
+            $this->app->redirect('/home');
         }
     }
 }

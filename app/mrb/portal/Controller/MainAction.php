@@ -36,12 +36,7 @@ class MainAction
                 break;
 
             case MRBConfig::PAGE_STATISTIK:
-                $template = "Home/statistik";
-                break;
-
-            case MRBConfig::PAGE_GETJSON:
-                $getJson = new StatistikAction($this->portal);
-                $getJson->generateJSON();
+                $template = "Home/statistik.twig";
                 break;
 
             case MRBConfig::PAGE_LOGIN:
@@ -56,10 +51,17 @@ class MainAction
             case MRBConfig::PAGE_HOME:
                 $dashboard = new DashboardAction($this->model);
                 $dashboard->simpanAmalan();
+                $this->pageRendering($page);
                 break;
+
             case MRBConfig::PAGE_LOGIN:
                 $login = new LoginAction($this->portal);
                 $login->forwardUrl();
+                break;
+
+            case MRBConfig::PAGE_GETJSON:
+                $getJson = new StatistikAction($this->portal);
+                $getJson->generateJSON();
                 break;
         }
     }
