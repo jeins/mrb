@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 20. Nov 2014 um 00:10
+-- Erstellungszeit: 23. Nov 2014 um 12:47
 -- Server Version: 5.6.16
 -- PHP-Version: 5.5.11
 
@@ -25,6 +25,6 @@ CREATE TABLE IF NOT EXISTS `mrb_userlogin` (
   `username` varchar(100) NOT NULL,
   `keylog` varbinary(255) NOT NULL,
   `keydoc` varchar(32) NOT NULL,
-  `groupliqo` INT NOT NULL,
+  `groupliqo` int(11) NOT NULL,
   PRIMARY KEY (`user_id`)
-);
+)
