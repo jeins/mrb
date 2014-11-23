@@ -20,13 +20,13 @@ class NewUserAction
         $this->keylog = $this->app->request->params('pass');
         $this->group = $this->app->request->params('group');
 
-        $this->query = new QueryUser();
+        $this->query = new QueryUser($this->username, $this->keylog);
         $this->json = new JSONQuery();
     }
 
     public function action(){
-        $this->query->insertNewUser($this->username, $this->keylog, $this->group);
-        $keyDoc = $this->query->getKeyDoc($this->username, $this->keylog);
+        $this->query->insertNewUser($this->group);
+        $keyDoc = $this->query->getKeyDoc();
 
         $this->json->setFileName($keyDoc);
         $this->json->createJSONFile();

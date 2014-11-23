@@ -14,18 +14,17 @@ use mrb\portal\Portal;
 class LoginAction
 {
     public function __construct(Portal $app){
-
-        $this->queryUser = new QueryUser();
-
         $this->app = $app;
         $this->username = $this->app->request->params('username');
         $this->keylog = $this->app->request->params('pass');
+
+        $this->queryUser = new QueryUser($this->username, $this->keylog);
     }
 
     public function forwardUrl(){
 
-        if($this->queryUser->isValid($this->username, $this->keylog)){
-            $groupDetail = $this->queryUser->getGroupLiqo($this->username, $this->keylog);
+        if($this->queryUser->isValid()){
+            $groupDetail = $this->queryUser->getGroupLiqo();
             $groupName = $groupDetail['groupliqo'];
             $groupId = $groupDetail['id_groupliqo'];
 

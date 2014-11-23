@@ -11,7 +11,11 @@ use Symfony\Component\Yaml\Yaml as Yaml;
 
 class QueryUser extends MainQuery
 {
-    public function __construct(){
+    private $username;
+
+    private $keylog;
+
+    public function __construct($username, $pass){
         parent::__construct();
         $configfile = $_SERVER['DOCUMENT_ROOT'] . '/../etc/config.yml';
         if(is_readable($configfile)) {
@@ -19,22 +23,33 @@ class QueryUser extends MainQuery
         } else{
             throw new \Exception("Configgile not found!");
         }
+
+        $this->username = $username;
+        $this->keylog = $pass;
     }
 
-    public function insertNewUser($name, $keylog, $group){
+    public function insertNewUser($group){
         $attribute = [
             'table' => 'mrb_userlogin',
             'keys' => 'username, keylog, keydoc, groupliqo',
-            'values' => "'$name', 'AES_ENCRYPT($keylog,". $this->config['security']['key'].")', '".md5($keylog.$name.$group)."', '$group'"
+            'values' => "'".$this->username."', 'AES_ENCRYPT(".$this->keylog.",". $this->config['security']['key'].")', '".md5($this->keylog.$this->username.$group)."', '$group'"
         ];
         $this->insertQuery($attribute);
     }
 
-    public function isValid($name, $keylog){
+    public function isValid(){
+        $attribute = [
+            'table' => 'mrb_userlogin',
+            'select' => 'keylog',
+            'terms' => "username='".$this->username."'"
+        ];
+        $result = $this->selectQuery($attribute);
+        $termKeylog = $result[0]['keylog'];
+
         $attribute = [
             'table' => 'mrb_userlogin',
             'select' => 'COUNT(*) AS total',
-            'terms' => "username='$name' AND CONVERT('AES_DECRYPT($keylog,".$this->config['security']['key'].")' USING utf8) LIKE '%$keylog%'"
+            'terms' => "username='".$this->username."' AND CONVERT('AES_DECRYPT($termKeylog,".$this->config['security']['key'].")' USING utf8) LIKE '%".$this->keylog."%'"
         ];
         $result = $this->selectQuery($attribute);
         if($result[0]['total'] == 1){
@@ -43,22 +58,22 @@ class QueryUser extends MainQuery
         return false;
     }
 
-    public function getKeyDoc($name, $keylog){
+    public function getKeyDoc(){
         $attribute = [
             'table' => 'mrb_userlogin',
             'select' => 'keydoc',
-            'terms' => "username='$name' AND CONVERT('AES_DECRYPT($keylog,".$this->config['security']['key'].")' USING utf8) LIKE '%$keylog%'"
+            'terms' => "username='".$this->username."'"
         ];
         $result = $this->selectQuery($attribute);
 
         return $result[0]['keydoc'];
     }
 
-    public function getGroupLiqo($name, $keylog){
+    public function getGroupLiqo(){
         $attribute = [
             'table' => 'mrb_userlogin, mrb_groupliqo',
             'select' => 'id_groupliqo, mrb_groupliqo.groupliqo',
-            'terms' => "username='$name' AND CONVERT('AES_DECRYPT($keylog,".$this->config['security']['key'].")' USING utf8) LIKE '%$keylog%' AND id_groupliqo=mrb_userlogin.groupliqo"
+            'terms' => "username='".$this->username."' AND CONVERT('AES_DECRYPT(".$this->keylog.",".$this->config['security']['key'].")' USING utf8) LIKE '%".$this->keylog."%' AND id_groupliqo=mrb_userlogin.groupliqo"
         ];
         $result = $this->selectQuery($attribute);
 
