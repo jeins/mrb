@@ -10,10 +10,11 @@ namespace mrb\portal\Controller\Admin;
 
 use mrb\portal\Model\Query\JSONQuery;
 use mrb\portal\Model\Query\QueryUser;
+use mrb\portal\Portal;
 
 class NewUserAction
 {
-    public function __construct($app){
+    public function __construct(Portal $app){
         $this->app = $app;
 
         $this->username = $this->app->request->params('username');

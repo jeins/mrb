@@ -42,7 +42,10 @@ Class DashboardAction
         $this->json->setFileName($fileName);
         $jsonData = $this->json->getAllDataFromJSON();
 
-        return $jsonData[$this->today];
+        if(array_key_exists($this->today, $jsonData)){
+            return $jsonData[$this->today];
+        }
+        return null;
     }
 
     public function calcChart(){

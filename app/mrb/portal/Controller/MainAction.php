@@ -8,6 +8,7 @@
 
 namespace mrb\portal\Controller;
 
+use mrb\portal\Controller\Admin\NewUserAction;
 use mrb\portal\Controller\Home\StatistikAction;
 use mrb\portal\Model\MRBConfig;
 use mrb\portal\Model\MRBModel;
@@ -41,6 +42,11 @@ class MainAction
 
             case MRBConfig::PAGE_LOGIN:
                 $template = "Login/login.twig";
+                break;
+
+            case MRBConfig::PAGE_NEWUSER:
+                $newUser = new NewUserAction($this->portal);
+                $newUser->action();
                 break;
         }
         $this->portal->render($template, $params);
