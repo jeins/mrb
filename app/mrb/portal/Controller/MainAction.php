@@ -26,6 +26,7 @@ class MainAction
     public function pageRendering($page){
         $template = "";
         $params = [];
+        if($page == "") $page = MRBConfig::PAGE_LOGIN;
         switch($page){
             case MRBConfig::PAGE_HOME:
                 $dashboard = new DashboardAction($this->model);
