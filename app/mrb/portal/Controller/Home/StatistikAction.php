@@ -8,19 +8,17 @@
 
 namespace mrb\portal\Controller\Home;
 
+use mrb\portal\Model\MRBModel;
 use mrb\portal\Model\Query\JSONQuery;
-use mrb\portal\Portal;
 
 class StatistikAction
 {
-    private $app;
     private $amalan;
 
-    public function __construct(Portal $app){
-        $this->app = $app;
+    public function __construct(MRBModel $model){
         $this->json = new JSONQuery();
-        $this->json->setFileName($this->app->request->params('filename'));
-        $this->amalan = $app->request->params('amalan');
+        $this->json->setFileName($model->getKeyDoc());
+        $this->amalan = $model->getQueryFromKey('amalan');
     }
 
     public function generateJSON(){
@@ -38,11 +36,6 @@ class StatistikAction
             }
         }
 
-        $response = $this->app->response();
-        $response['Content-type'] = 'application/json';
-
-        $json = json_encode($tmpData);
-
-        $response->body($json);
+        return json_encode($tmpData);
     }
 }

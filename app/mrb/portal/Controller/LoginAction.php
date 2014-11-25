@@ -8,17 +8,20 @@
 
 namespace mrb\portal\Controller;
 
+use mrb\portal\Model\MRBModel;
 use mrb\portal\Model\Query\QueryUser;
-use mrb\portal\Portal;
 
 class LoginAction
 {
-    public function __construct(Portal $app){
-        $this->app = $app;
-        $this->username = $this->app->request->params('username');
-        $this->keylog = $this->app->request->params('pass');
+    public function __construct(MRBModel $model){
+        $this->queryUser = new QueryUser(
+            $model->getQueryFromKey('username'),
+            $model->getQueryFromKey('pass')
+        );
+    }
 
-        $this->queryUser = new QueryUser($this->username, $this->keylog);
+    public function setKeyDoc(){
+        return $this->queryUser->getKeyDoc();
     }
 
     public function forwardUrl(){
@@ -28,7 +31,7 @@ class LoginAction
             $groupName = $groupDetail['groupliqo'];
             $groupId = $groupDetail['id_groupliqo'];
 
-            $this->app->redirect('/home');
+           return '/home';
         }
     }
 }

@@ -9,15 +9,13 @@
 namespace mrb\portal;
 
 use mrb\portal\Controller\Admin\NewUserAction;
-use mrb\portal\Controller\Home\StatistikAction;
-use mrb\portal\Controller\LoginAction;
 use mrb\portal\Model\MRBConfig;
 use mrb\portal\Model\MRBModel;
-use mrb\portal\Model\Query\QueryUser;
 use Slim\Slim;
 use Slim\Views\Twig as Twig;
 use Slim\Views\TwigExtension as TwigExtension;
 use mrb\portal\Controller\MainAction;
+use Symfony\Component\Yaml\Yaml as Yaml;
 
 
 class Portal extends Slim
@@ -26,33 +24,37 @@ class Portal extends Slim
     {
         $this->twigView = new Twig();
         $this->twigView->parserExtensions = array(new TwigExtension());
-
-        date_default_timezone_set('Europe/Berlin');
+        $this->config = Yaml::parse(file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/../etc/config.yml', true));
 
         parent::__construct(
             [
                 'view' => $this->twigView,
                 'mode' => 'development',
                 'debug' => true,
-                'templates.path' => $_SERVER['DOCUMENT_ROOT'] . '/../etc/templates'
+                'templates.path' => $_SERVER['DOCUMENT_ROOT'] . '/../etc/templates',
+                'cookies.encrypt' => true,
+                'cookies.secret_key' => $this->config['security']['key'],
+                'cookies.cipher' => MCRYPT_RIJNDAEL_256,
+                'cookies.cipher_mode' => MCRYPT_MODE_CBC
             ]
         );
+
+        date_default_timezone_set('Europe/Berlin');
         $this->setupRouting();
     }
 
     private function setupRouting()
     {
-        $app = Portal::getInstance();
-        $main = new MainAction($this, new MRBModel($app->request()));
+        $main = new MainAction($this);
 
-        $this->get('/', function() use($app, $main){
+        $this->get('/', function() use($main){
             $main->pageRendering(MRBConfig::PAGE_LOGIN);
         });
 
-        $this->get('/:page', function($page) use($app, $main){
+        $this->get('/:page', function($page) use($main){
             $main->pageRendering($page);
         });
-        $this->post('/:page', function($page) use ($app, $main){
+        $this->post('/:page', function($page) use ($main){
             $main->pageAction($page);
         });
 

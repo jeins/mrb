@@ -17,29 +17,29 @@ Class DashboardAction
     public function __construct(MRBModel $model) {
         $this->db = new MainQuery();
         $this->json = new JSONQuery();
-        $this->queries = $model->getQueries();
+
         $this->today = strtotime(date('d-m-Y'));
+        $this->model = $model;
+        $this->fileName = $this->model->getKeyDoc();
     }
 
     public function simpanAmalan(){
-        $fileName = 'juan';
-        $this->json->setFileName($fileName);
+        $this->json->setFileName($this->fileName);
         $jsonData = $this->json->getAllDataFromJSON();
 
         if(array_key_exists($this->today, $jsonData)){
-            foreach ($this->queries as $key=>$value){
+            foreach ($this->model->getQueries() as $key=>$value){
                 $jsonData[$this->today][$key] = $value;
             }
         } else{
-            $jsonData[$this->today] = $this->queries;
+            $jsonData[$this->today] = $this->model->getQueries();
         }
 
         $this->json->writeDataToJSON($jsonData);
     }
 
     public function getAmalanToday() {
-        $fileName = 'juan';
-        $this->json->setFileName($fileName);
+        $this->json->setFileName($this->fileName);
         $jsonData = $this->json->getAllDataFromJSON();
 
         if(array_key_exists($this->today, $jsonData)){

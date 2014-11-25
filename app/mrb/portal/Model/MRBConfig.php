@@ -15,4 +15,6 @@ class MRBConfig
     const PAGE_STATISTIK    = 'statistik';
     const PAGE_GETJSON      = 'getjson';
     const PAGE_NEWUSER      = 'tambahjamaah';
+
+    const COOKIE_KEYDOC     = '_keydoc';
 }

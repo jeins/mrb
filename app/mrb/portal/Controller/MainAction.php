@@ -18,9 +18,12 @@ use mrb\portal\Controller\LoginAction;
 
 class MainAction
 {
-    public function __construct(Portal $portal, MRBModel $model){
+    public function __construct(Portal $portal){
         $this->portal = $portal;
-        $this->model = $model;
+
+        $this->model = new MRBModel();
+        $this->model->setQueries($portal->request->params());
+        $this->model->setKeyDoc($portal->getCookie(MRBConfig::COOKIE_KEYDOC));
     }
 
     public function pageRendering($page){
@@ -39,6 +42,9 @@ class MainAction
 
             case MRBConfig::PAGE_STATISTIK:
                 $template = "Home/statistik.twig";
+                $params = [
+                    'filename' => $this->portal->getCookie(MRBConfig::COOKIE_KEYDOC)
+                ];
                 break;
 
             case MRBConfig::PAGE_LOGIN:
@@ -58,17 +64,22 @@ class MainAction
             case MRBConfig::PAGE_HOME:
                 $dashboard = new DashboardAction($this->model);
                 $dashboard->simpanAmalan();
+
                 $this->pageRendering($page);
                 break;
 
             case MRBConfig::PAGE_LOGIN:
-                $login = new LoginAction($this->portal);
-                $login->forwardUrl();
+                $login = new LoginAction($this->model);
+                $this->portal->setCookie(MRBConfig::COOKIE_KEYDOC, $login->setKeyDoc(), '1 day');
+                $this->portal->redirect($login->forwardUrl());
                 break;
 
             case MRBConfig::PAGE_GETJSON:
-                $getJson = new StatistikAction($this->portal);
-                $getJson->generateJSON();
+                $getJson = new StatistikAction($this->model);
+
+                $response = $this->portal->response();
+                $response['Content-type'] = 'application/json';
+                $response->body($getJson->generateJSON());
                 break;
         }
     }

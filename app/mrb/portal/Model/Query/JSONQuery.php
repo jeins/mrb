@@ -47,6 +47,7 @@ class JSONQuery
 
     public function createJSONFile(){
         fopen($this->JSONFile, 'w');
+        file_put_contents($this->JSONFile, '{}');
     }
 
     public function isJSONExsist(){
