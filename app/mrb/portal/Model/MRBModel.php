@@ -8,8 +8,6 @@
 
 namespace mrb\portal\Model;
 
-use Slim\Http\Request;
-
 class MRBModel
 {
     private $queries;

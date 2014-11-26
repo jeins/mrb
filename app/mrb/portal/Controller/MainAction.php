@@ -54,6 +54,7 @@ class MainAction
             case MRBConfig::PAGE_NEWUSER:
                 $newUser = new NewUserAction($this->portal);
                 $newUser->action();
+                $template = "Login/login.twig";
                 break;
         }
         $this->portal->render($template, $params);

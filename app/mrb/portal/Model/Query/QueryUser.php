@@ -31,10 +31,20 @@ class QueryUser extends MainQuery
     public function insertNewUser($group){
         $attribute = [
             'table' => 'mrb_userlogin',
-            'keys' => 'username, keylog, keydoc, groupliqo',
-            'values' => "'".$this->username."', 'AES_ENCRYPT(".$this->keylog.",". $this->config['security']['key'].")', '".md5($this->keylog.$this->username.$group)."', '$group'"
+            'select' => 'COUNT(*) AS total',
+            'terms' => "username='".$this->username."'"
         ];
-        $this->insertQuery($attribute);
+
+        $result = $this->selectQuery($attribute);
+
+        if(!($result[0]['total'] >= 1)){
+            $attribute = [
+                'table' => 'mrb_userlogin',
+                'keys' => 'username, keylog, keydoc, groupliqo',
+                'values' => "'".$this->username."', 'AES_ENCRYPT(".$this->keylog.",". $this->config['security']['key'].")', '".md5($this->keylog.$this->username.$group)."', '$group'"
+            ];
+            $this->insertQuery($attribute);
+        }
     }
 
     public function isValid(){
