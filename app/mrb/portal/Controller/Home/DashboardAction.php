@@ -78,4 +78,12 @@ Class DashboardAction
 
         return $totalAmalan;
     }
+
+    public function isJdwlPuasa(){
+        $day = date('N', $this->today);
+        if($day == 1 || $day == 4){
+            return true;
+        }
+        return false;
+    }
 }

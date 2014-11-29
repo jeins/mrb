@@ -36,7 +36,8 @@ class MainAction
                 $template = "Home/home.twig";
                 $params = [
                     'status' => $dashboard->getAmalanToday(),
-                    'chart' => $dashboard->calcChart()
+                    'chart' => $dashboard->calcChart(),
+                    'isJdwlPuasa' => $dashboard->isJdwlPuasa()
                 ];
                 break;
 

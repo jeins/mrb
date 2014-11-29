@@ -55,7 +55,7 @@
                     <span class="text">Tahajud</span>
                     <small class="label label-success"><i class="fa fa-bookmark"></i> min 1 kali</small>
                 </li>
-                <li {% if status.puasa %}class="done"{% endif %}>
+                <li {% if status.puasa or isJdwlPuasa==false %}class="done"{% endif %}>
                     <input type="checkbox" value="1" {% if status.puasa %}checked{% endif %} name="puasa"/>
                     <span class="text">Puasa Sunnah</span>
                     <small class="label label-success"><i class="fa fa-clock-o"></i> 1 hari</small>
