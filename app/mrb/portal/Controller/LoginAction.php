@@ -18,10 +18,15 @@ class LoginAction
             $model->getQueryFromKey('username'),
             $model->getQueryFromKey('pass')
         );
+        $this->model = $model;
     }
 
     public function setKeyDoc(){
         return $this->queryUser->getKeyDoc();
+    }
+
+    public function setUsername(){
+        return $this->model->getQueryFromKey('username');
     }
 
     public function forwardUrl(){

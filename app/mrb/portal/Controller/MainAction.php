@@ -10,11 +10,11 @@ namespace mrb\portal\Controller;
 
 use mrb\portal\Controller\Admin\NewUserAction;
 use mrb\portal\Controller\Home\StatistikAction;
+use mrb\portal\Controller\Profile\ProfileAction;
 use mrb\portal\Model\MRBConfig;
 use mrb\portal\Model\MRBModel;
 use mrb\portal\Portal;
 use mrb\portal\Controller\Home\DashboardAction;
-use mrb\portal\Controller\LoginAction;
 
 class MainAction
 {
@@ -24,12 +24,13 @@ class MainAction
         $this->model = new MRBModel();
         $this->model->setQueries($portal->request->params());
         $this->model->setKeyDoc($portal->getCookie(MRBConfig::COOKIE_KEYDOC));
+        $this->model->setUsername($portal->getCookie(MRBConfig::COOKIE_USERNAME));
     }
 
     public function pageRendering($page){
         $template = "";
         $params = [];
-        if($page == "") $page = MRBConfig::PAGE_LOGIN;
+        if($page == "" || !(isset($_SERVER['HTTP_COOKIE']))) $page = MRBConfig::PAGE_LOGIN;
         switch($page){
             case MRBConfig::PAGE_HOME:
                 $dashboard = new DashboardAction($this->model);
@@ -52,10 +53,23 @@ class MainAction
                 $template = "Login/login.twig";
                 break;
 
+            case MRBConfig::PAGE_LOGOUT:
+                $this->model->removedAllCookies();
+                $template = "Login/login.twig";
+                break;
+
             case MRBConfig::PAGE_NEWUSER:
                 $newUser = new NewUserAction($this->portal);
                 $newUser->action();
                 $template = "Login/login.twig";
+                break;
+
+            case MRBConfig::PAGE_PROFILE:
+                $profile = new ProfileAction($this->model);
+                $params = [
+                    'logininfo' => $profile->getLoginData()
+                ];
+                $template = "Profile/profile.twig";
                 break;
         }
         $this->portal->render($template, $params);
@@ -73,6 +87,7 @@ class MainAction
             case MRBConfig::PAGE_LOGIN:
                 $login = new LoginAction($this->model);
                 $this->portal->setCookie(MRBConfig::COOKIE_KEYDOC, $login->setKeyDoc(), '1 day');
+                $this->portal->setCookie(MRBConfig::COOKIE_USERNAME, $login->setUsername(), '1 day');
                 $this->portal->redirect($login->forwardUrl());
                 break;
 
@@ -82,6 +97,13 @@ class MainAction
                 $response = $this->portal->response();
                 $response['Content-type'] = 'application/json';
                 $response->body($getJson->generateJSON());
+                break;
+
+            case MRBConfig::PAGE_PROFILE:
+                $profile = new ProfileAction($this->model);
+                $profile->getAction($this->model->getQueryFromKey('action'));
+
+                $this->pageRendering($page);
                 break;
         }
     }
