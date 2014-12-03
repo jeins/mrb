@@ -23,6 +23,19 @@ Class DashboardAction
         $this->fileName = $this->model->getKeyDoc();
     }
 
+    public function setPrevNextDate(){
+        $date = $this->model->getQueryFromKey('date');
+        if($this->model->getQueryFromKey('prevdate')){
+            $this->today = strtotime($date.' -1 day');
+        } else if($this->model->getQueryFromKey('nextdate')){
+            $this->today = strtotime($date.' +1 day');
+        }
+    }
+
+    public function getDate(){
+        return date('d-m-Y', $this->today);
+    }
+
     public function simpanAmalan(){
         $this->json->setFileName($this->fileName);
         $jsonData = $this->json->getAllDataFromJSON();

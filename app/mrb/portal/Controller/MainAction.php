@@ -34,8 +34,12 @@ class MainAction
         switch($page){
             case MRBConfig::PAGE_HOME:
                 $dashboard = new DashboardAction($this->model);
+                if(isset($_GET['prevdate']) || isset($_GET['nextdate'])){
+                    $dashboard->setPrevNextDate();
+                }
                 $template = "Home/home.twig";
                 $params = [
+                    'date' => $dashboard->getDate(),
                     'status' => $dashboard->getAmalanToday(),
                     'chart' => $dashboard->calcChart(),
                     'isJdwlPuasa' => $dashboard->isJdwlPuasa()
