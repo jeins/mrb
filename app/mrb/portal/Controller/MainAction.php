@@ -75,6 +75,10 @@ class MainAction
                 ];
                 $template = "Profile/profile.twig";
                 break;
+
+            case MRBConfig::PAGE_KEGIATAN:
+                $template = "Calendar/calendar.twig";
+                break;
         }
         $this->portal->render($template, $params);
     }
@@ -84,6 +88,10 @@ class MainAction
             case MRBConfig::PAGE_HOME:
                 $dashboard = new DashboardAction($this->model);
                 $dashboard->simpanAmalan();
+
+                if(strpos($_SERVER['REQUEST_URI'], 'checkdate')){
+                  $this->model->setQuery('date', $_GET['date']);
+                }
 
                 $this->pageRendering($page);
                 break;

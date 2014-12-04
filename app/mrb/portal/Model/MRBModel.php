@@ -28,6 +28,10 @@ class MRBModel
         $this->queries = $queries;
     }
 
+    public function setQuery($key, $value){
+        $this->queries[$key] = $value;
+    }
+
     public function getQueries(){
         return $this->queries;
     }

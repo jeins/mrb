@@ -39,13 +39,14 @@ Class DashboardAction
     public function simpanAmalan(){
         $this->json->setFileName($this->fileName);
         $jsonData = $this->json->getAllDataFromJSON();
+        $today = strtotime($this->model->getQueryFromKey('date'));
 
-        if(array_key_exists($this->today, $jsonData)){
+        if(array_key_exists($today, $jsonData)){
             foreach ($this->model->getQueries() as $key=>$value){
-                $jsonData[$this->today][$key] = $value;
+                $jsonData[$today][$key] = $value;
             }
         } else{
-            $jsonData[$this->today] = $this->model->getQueries();
+            $jsonData[$today] = $this->model->getQueries();
         }
 
         $this->json->writeDataToJSON($jsonData);
