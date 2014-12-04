@@ -25,9 +25,9 @@ Class DashboardAction
 
     public function setPrevNextDate(){
         $date = $this->model->getQueryFromKey('date');
-        if($this->model->getQueryFromKey('prevdate')){
+        if($this->model->getQueryFromKey('checkdate') == 'prevdate'){
             $this->today = strtotime($date.' -1 day');
-        } else if($this->model->getQueryFromKey('nextdate')){
+        } else if($this->model->getQueryFromKey('checkdate') == 'nextdate'){
             $this->today = strtotime($date.' +1 day');
         }
     }

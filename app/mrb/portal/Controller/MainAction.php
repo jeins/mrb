@@ -34,7 +34,7 @@ class MainAction
         switch($page){
             case MRBConfig::PAGE_HOME:
                 $dashboard = new DashboardAction($this->model);
-                if(strpos($_SERVER['REQUEST_URI'], 'prevdate') || strpos($_SERVER['REQUEST_URI'], 'nextdate')){
+                if(strpos($_SERVER['REQUEST_URI'], 'checkdate')){
                     $dashboard->setPrevNextDate();
                 }
                 $template = "Home/home.twig";
