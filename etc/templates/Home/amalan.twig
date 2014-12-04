@@ -76,18 +76,9 @@
 </div><!-- /.box -->
 
 <script>
-    function go(){
-        alert("OK");
+    var today = $.datepicker.formatDate('dd-mm-yy', new Date());
+    var date = $('.tgl_today').text().replace('Tanggal: ', '');
+    if(today == date){
+        $('.tgl_next').hide();
     }
-    $('.tgl_prev').on('click', function(){
-        var date = $('.tgl_today').text().replace('Tanggal: ', '').split('-');
-        var tgl = date[0];
-        var month = date[1]-1;
-        var year = date[2];
-
-        var prevDate = new Date(year, month, tgl-1);
-        window.location.href += '?setdate=' + prevDate.getDay() + '-' + prevDate.getMonth()+1 + '-' +prevDate.getYear();
-        location.reload();
-        console.log(window.location.href);
-    });
 </script>
