@@ -74,7 +74,7 @@ Class DashboardAction
             $minAmalan[$result['amalan']] = $result['min_minggu'];
         }
 
-        $jsonData = $this->json->getSpesificDataFromJSON(date('w', $this->today));
+        $jsonData = $this->json->getJSONDataInThisWeek(array_merge([0=>strtotime(date('d-m-Y'))],$this->getFirstDayUntilNow()));
 
         $totalAmalan = [];
         foreach($minAmalan as $key=>$value){
@@ -101,7 +101,7 @@ Class DashboardAction
         return false;
     }
 
-    public function getWeekStatus(){
+    public function getFirstDayUntilNow(){
         $arrDayNum = [];
         $tmpDate = strtotime(date('d-m-Y'));
         while(true){
@@ -113,8 +113,12 @@ Class DashboardAction
                 break;
             }
         }
+        return $arrDayNum;
+    }
 
+    public function getWeekStatus(){
         $results = [];
+        $arrDayNum = $this->getFirstDayUntilNow();
         for($i=1; $i<=7; $i++){
             if($i <= sizeof($arrDayNum)){
                 if($this->json->isWeekAvailable($arrDayNum[$i])){

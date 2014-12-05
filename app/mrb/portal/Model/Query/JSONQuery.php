@@ -41,6 +41,21 @@ class JSONQuery
         return $newJSONData;
     }
 
+    public function getJSONDataInThisWeek($arrWeek){
+        $arrJSONData = array_reverse($this->getAllDataFromJSON(), true);
+        $newJSONData = [];
+
+        foreach($arrWeek as $week){
+            if(array_key_exists($week, $arrJSONData)){
+                $newJSONData[$week] = $arrJSONData[$week];
+            } else{
+                $newJSONData[$week] = [];
+            }
+        }
+
+        return $newJSONData;
+    }
+
     public function isWeekAvailable($weekKey){
         $arrJSONData = array_reverse($this->getAllDataFromJSON(), true);
         if(array_key_exists($weekKey, $arrJSONData)){
