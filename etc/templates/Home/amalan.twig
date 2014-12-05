@@ -12,7 +12,12 @@
         </div>
     </div>
     <div class="box-body">
-        <form action="#" method="post">
+        <ul class="pagination pagination-sm inline" style="margin-bottom: 20px">
+            {% for color in weekstatus %}
+                <li><span style="{{ color }}">{{ loop.index }}</span></li>
+            {% endfor %}
+        </ul>
+        <form action="#" method="post" style="margin-top: 35px;">
             <ul class="todo-list">
                 <li {% if status.tilawah %}class="done"{% endif %}>
                     <!-- checkbox -->

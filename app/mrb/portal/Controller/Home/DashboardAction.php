@@ -16,11 +16,13 @@ Class DashboardAction
 {
     public function __construct(MRBModel $model) {
         $this->db = new MainQuery();
-        $this->json = new JSONQuery();
 
         $this->today = strtotime(date('d-m-Y'));
         $this->model = $model;
         $this->fileName = $this->model->getKeyDoc();
+
+        $this->json = new JSONQuery();
+        $this->json->setFileName($this->fileName);
     }
 
     public function setPrevNextDate(){
@@ -37,7 +39,6 @@ Class DashboardAction
     }
 
     public function simpanAmalan(){
-        $this->json->setFileName($this->fileName);
         $jsonData = $this->json->getAllDataFromJSON();
         $today = strtotime($this->model->getQueryFromKey('date'));
 
@@ -53,7 +54,6 @@ Class DashboardAction
     }
 
     public function getAmalanToday() {
-        $this->json->setFileName($this->fileName);
         $jsonData = $this->json->getAllDataFromJSON();
 
         if(array_key_exists($this->today, $jsonData)){
@@ -99,5 +99,40 @@ Class DashboardAction
             return true;
         }
         return false;
+    }
+
+    public function getWeekStatus(){
+        $arrDayNum = [];
+        $tmpDate = strtotime(date('d-m-Y'));
+        while(true){
+            $date = strtotime(date('d-m-Y', $tmpDate).' -1 day');
+            $tmpDate = $date;
+            $dayNum = date('w', $tmpDate);
+            $arrDayNum [$dayNum]= $tmpDate;
+            if($dayNum == 1){
+                break;
+            }
+        }
+
+        $results = [];
+        for($i=1; $i<=7; $i++){
+            if($i <= sizeof($arrDayNum)){
+                if($this->json->isWeekAvailable($arrDayNum[$i])){
+                    $results[$i] = 'background-color: #dff0d8';
+                } else{
+                    $results[$i] = 'background-color: #f2dede';
+                }
+            } else if($i == date('w', strtotime(date('d-m-Y')))){
+                $results[$i] = '';
+            }
+            else{
+                $results[$i] = 'background-color: #cccccc';
+            }
+
+            if($i == (date('w', $this->today))){
+                $results[$i] .= ';border-color: #ff0000';
+            }
+        }
+        return $results;
     }
 }

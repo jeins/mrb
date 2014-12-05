@@ -41,6 +41,14 @@ class JSONQuery
         return $newJSONData;
     }
 
+    public function isWeekAvailable($weekKey){
+        $arrJSONData = array_reverse($this->getAllDataFromJSON(), true);
+        if(array_key_exists($weekKey, $arrJSONData)){
+            return true;
+        }
+        return false;
+    }
+
     public function writeDataToJSON($data){
         file_put_contents($this->JSONFile, json_encode($data));
     }

@@ -42,7 +42,8 @@ class MainAction
                     'date' => $dashboard->getDate(),
                     'status' => $dashboard->getAmalanToday(),
                     'chart' => $dashboard->calcChart(),
-                    'isJdwlPuasa' => $dashboard->isJdwlPuasa()
+                    'isJdwlPuasa' => $dashboard->isJdwlPuasa(),
+                    'weekstatus' => $dashboard->getWeekStatus()
                 ];
                 break;
 
