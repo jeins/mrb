@@ -18,23 +18,23 @@
 <li class="dropdown user user-menu">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
         <i class="glyphicon glyphicon-user"></i>
-        <span>Juan <i class="caret"></i></span>
+        <span>{{ user | capitalize }} <i class="caret"></i></span>
     </a>
     <ul class="dropdown-menu">
         <!-- User image -->
         <li class="user-header bg-light-blue">
             <img src="{{ app.request.host }}/img/user.png" class="img-circle" alt="User Image" />
             <p>
-                Hello World
+                {{ user | capitalize }}
             </p>
         </li>
         <!-- Menu Footer-->
         <li class="user-footer">
             <div class="pull-left">
-                <a href="/profile" class="btn btn-default btn-flat">Profile</a>
+                <a href="{{ PAGE_PROFILE }}" class="btn btn-default btn-flat">Profile</a>
             </div>
             <div class="pull-right">
-                <a href="/signout" class="btn btn-default btn-flat">Sign out</a>
+                <a href="{{ PAGE_LOGOUT }}" class="btn btn-default btn-flat">Sign out</a>
             </div>
         </li>
     </ul>

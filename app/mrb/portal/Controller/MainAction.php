@@ -29,7 +29,9 @@ class MainAction
 
     public function pageRendering($page){
         $template = "";
-        $params = [];
+        $params = [
+            'user' => $this->model->getUsername()
+        ];
         if($page == "" || !(isset($_SERVER['HTTP_COOKIE']))) $page = MRBConfig::PAGE_LOGIN;
         switch($page){
             case MRBConfig::PAGE_HOME:
@@ -38,20 +40,22 @@ class MainAction
                     $dashboard->setPrevNextDate();
                 }
                 $template = "Home/home.twig";
-                $params = [
-                    'date' => $dashboard->getDate(),
-                    'status' => $dashboard->getAmalanToday(),
-                    'chart' => $dashboard->calcChart(),
-                    'isJdwlPuasa' => $dashboard->isJdwlPuasa(),
-                    'weekstatus' => $dashboard->getWeekStatus()
-                ];
+                $params = array_merge($params,
+                    [
+                        'date' => $dashboard->getDate(),
+                        'status' => $dashboard->getAmalanToday(),
+                        'chart' => $dashboard->calcChart(),
+                        'isJdwlPuasa' => $dashboard->isJdwlPuasa(),
+                        'weekstatus' => $dashboard->getWeekStatus()
+                    ]);
                 break;
 
             case MRBConfig::PAGE_STATISTIK:
                 $template = "Home/statistik.twig";
-                $params = [
-                    'filename' => $this->portal->getCookie(MRBConfig::COOKIE_KEYDOC)
-                ];
+                $params = array_merge($params,
+                    [
+                        'filename' => $this->portal->getCookie(MRBConfig::COOKIE_KEYDOC)
+                    ]);
                 break;
 
             case MRBConfig::PAGE_LOGIN:
@@ -71,9 +75,10 @@ class MainAction
 
             case MRBConfig::PAGE_PROFILE:
                 $profile = new ProfileAction($this->model);
-                $params = [
-                    'logininfo' => $profile->getLoginData()
-                ];
+                $params = array_merge($params,
+                    [
+                        'logininfo' => $profile->getLoginData()
+                    ]);
                 $template = "Profile/profile.twig";
                 break;
 
