@@ -8,3 +8,5 @@ twig:
         home_url: http://mrb123.127.0.0.1.xip.io/
 security:
     key: b5e6151cdf42070719
+json:
+    event: ""

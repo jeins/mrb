@@ -107,7 +107,7 @@ Class DashboardAction
         while(true){
             $date = strtotime(date('d-m-Y', $tmpDate).' -1 day');
             $tmpDate = $date;
-            $dayNum = date('w', $tmpDate);
+            $dayNum = date('w', $tmpDate)+1;
             $arrDayNum [$dayNum]= $tmpDate;
             if($dayNum == 1){
                 break;
@@ -117,23 +117,27 @@ Class DashboardAction
     }
 
     public function getWeekStatus(){
-        $results = [];
+        $results = [];echo date('w', $this->today);
         $arrDayNum = $this->getFirstDayUntilNow();
+        $dayWeek = date('w', $this->today);
+        if($dayWeek == 0){
+            $dayWeek = 7;
+        }
         for($i=1; $i<=7; $i++){
             if($i <= sizeof($arrDayNum)){
                 if($this->json->isWeekAvailable($arrDayNum[$i])){
                     $results[$i] = 'background-color: #dff0d8';
+                } else if($i == date('w', strtotime(date('d-m-Y')))){
+                    $results[$i] = '';
                 } else{
                     $results[$i] = 'background-color: #f2dede';
                 }
-            } else if($i == date('w', strtotime(date('d-m-Y')))){
-                $results[$i] = '';
             }
             else{
                 $results[$i] = 'background-color: #cccccc';
             }
 
-            if($i == (date('w', $this->today))){
+            if($i == $dayWeek){
                 $results[$i] .= ';border-color: #ff0000';
             }
         }
