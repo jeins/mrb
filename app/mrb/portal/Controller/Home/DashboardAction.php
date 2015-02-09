@@ -117,7 +117,7 @@ Class DashboardAction
     }
 
     public function getWeekStatus(){
-        $results = [];echo date('w', $this->today);
+        $results = [];
         $arrDayNum = $this->getFirstDayUntilNow();
         $dayWeek = date('w', $this->today);
         if($dayWeek == 0){
