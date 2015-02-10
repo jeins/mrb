@@ -127,10 +127,12 @@ Class DashboardAction
             if($i <= sizeof($arrDayNum)){
                 if($this->json->isWeekAvailable($arrDayNum[$i])){
                     $results[$i] = 'background-color: #dff0d8';
-                } else if($i == date('w', strtotime(date('d-m-Y')))){
-                    $results[$i] = '';
                 } else{
                     $results[$i] = 'background-color: #f2dede';
+                }
+
+                if($i == date('w', strtotime(date('d-m-Y')))){
+                    $results[$i] = '';
                 }
             }
             else{
